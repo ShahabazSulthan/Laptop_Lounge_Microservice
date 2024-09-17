@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./pkg/pb/user";
+
+service User {
+  rpc UserSignUp(UserSignUpRequest) returns (UserSignUpResponse) {};
+  rpc UserLogin(UserLoginRequest) returns (UserLoginResponse) {};
+
+  rpc AddAddress(AddAddressRequest) returns (AddAddressResponse) {};
+  rpc GetAddress(GetAddressRequest) returns (GetAddressResponse) {};
+  rpc UpdateAddress(UpdateAddressRequest) returns (UpdateAddressResponse) {};
+  rpc DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse) {};
+}
+
+message UserSignUpRequest {
+  string firstname = 1;
+  string lastname = 2;
+  string email = 3;
+  string password = 4;
+  string phone = 5;
+}
+
+message UserDetails {
+  uint64 id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string email = 4;
+  string phone = 5;
+}
+
+message UserSignUpResponse {
+  int64 status = 1;
+  UserDetails userDetails = 2;
+  string accessToken = 3;
+}
+
+message UserLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message UserLoginResponse {
+  int64 status = 1;
+  UserDetails userDetails = 2;
+  string accessToken = 3;
+  string refreshToken = 4;
+}
+
+// Address-related messages
+message AddressDetails {
+  uint64 id = 1;
+  uint64 user_id = 2;      
+  string street = 3;
+  string city = 4;
+  string state = 5;
+  string zip_code = 6;     
+  string country = 7;
+}
+
+message AddAddressRequest {
+  uint64 user_id = 1;      
+  string street = 2;
+  string city = 3;
+  string state = 4;
+  string zip_code = 5;    
+  string country = 6;
+}
+
+message AddAddressResponse {
+  int64 status = 1;
+  AddressDetails addressDetails = 2; 
+}
+
+message GetAddressRequest {
+  uint64 id = 1;  
+}
+
+message GetAddressResponse {
+  int64 status = 1;
+  AddressDetails addressDetails = 2; 
+}
+
+message UpdateAddressRequest {
+  uint64 id = 1;  
+  string street = 2;
+  string city = 3;
+  string state = 4;
+  string zip_code = 5;     
+  string country = 6;
+}
+
+message UpdateAddressResponse {
+  int64 status = 1;
+  AddressDetails addressDetails = 2;
+}
+
+message DeleteAddressRequest {
+  uint64 id = 1;  
+}
+
+message DeleteAddressResponse {
+  int64 status = 1;
+}
